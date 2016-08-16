@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/data-debug.css">
+    <link rel="stylesheet" href="/css/wysiwyg-editor.min.css">
+    <script type="text/javascript" src="/libs/jquery-2.1.0.min.js"></script>
+    <script type="text/javascript" src="/libs/bootstrap.min.js"></script>
+</head>
+<body>
+  
+  <div class="user-list row col-xs-offset-1 col-xs-10">
+    <ol class="breadcrumb">
+      <li><a href="/abe/">Home</a></li>
+      <li><a href="/abe/plugin/abe-debugger/json" class="active">Data json</a></li>
+    </ol>
+  
+    {{#if error}}
+    <div class="alert alert-danger hidden" role="alert">
+      {{error}}
+    </div>
+    {{/if}}
+  
+    <form method="post" action="/abe/plugin/abe-debugger/json">
+      <div class="input-group">
+        <span class="input-group-addon" id="basic-folder"><span class="glyphicon glyphicon-folder-open"></span></span>
+        <input name="path" placeholder="/" value="{{path}}" class="form-control" data-path aria-describedby="basic-folder" />
+      </div>
+      <br />
+      <div class="form-group">
+        <input type="submit" value="send" class="btn btn-default" />
+      </div>
+    </form>
+    {{#if json}}
+    <form method="post" action="/abe/plugin/abe-debugger/json">
+      <br />
+      <div class="input-group">
+        <span class="input-group-addon" id="basic-folder"><span class="glyphicon glyphicon-folder-open"></span></span>
+        <input name="jsonPath" placeholder="/" value="{{jsonPath}}" class="form-control" />
+        <input name="path" placeholder="/" value="{{path}}" class="form-control" type="hidden" />
+      </div>
+      <br />
+      <div class="input-group">
+        <span class="input-group-addon" id="basic-code"><strong>{}</strong></span>
+        <textarea rows="10" name="json" placeholder='{"key":"value"}' class="form-control" data-json class="form-control" data-path aria-describedby="basic-code">{{json}}</textarea>
+      </div>
+      <br />
+      <div class="form-group">
+        <input type="submit" value="update" class="btn btn-default" />
+      </div>
+    </form>
+    {{/if}}
+
+    <h1>{{fileNum}} files found</h1>
+
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+      <table class="table table-striped table-bordered table-responsive" id="filtered-list">
+        <thead>
+          <tr>
+            <th>id</th>
+            <th>link</th>
+            <th>status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each results}}
+            <tr>
+              <td>
+              {{@index}}
+              </td>
+              <td>
+                <a href="/abe/plugin/abe-debugger/json?path={{abe_meta.latest.abeUrl}}">
+                  {{abe_meta.latest.abeUrl}}
+                </a>
+              </td>
+              <td>
+                {{abe_meta.status}}
+              </td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="/data-debug.js"></script>
+  
+</body>
+</html>
