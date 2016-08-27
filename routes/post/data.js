@@ -32,6 +32,7 @@ var route = function route(req, res, next, abe) {
       res: res
     },
     select: req.body.select,
+    path: req.body.path,
     json: req.body.json,
     result: result,
     size: result.length,
