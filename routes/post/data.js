@@ -21,7 +21,7 @@ var route = function route(req, res, next, abe) {
     .then((result) => {
       var d = (new Date().getTime() - dateStart.getTime()) / 1000
 
-      var login = abe.fileUtils.concatPath(__dirname + '/../../partials/data.html')
+      var login = path.join(__dirname + '/../../partials/data.html')
       var html = abe.fileUtils.getFileContent(login);
       var template = abe.Handlebars.compile(html, {noEscape: true})
       var tmp = template({
