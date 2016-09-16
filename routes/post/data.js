@@ -1,5 +1,7 @@
 'use strict';
 
+var path = require('path');
+
 var route = function route(req, res, next, abe) {
   abe.Hooks.instance.trigger('beforeRoute', req, res, next);
   if(typeof res._header !== 'undefined' && res._header !== null) return;
@@ -21,7 +23,7 @@ var route = function route(req, res, next, abe) {
     json
   )
 
-  var login = abe.fileUtils.concatPath(__dirname + '/../../partials/data.html')
+  var login = path.join(__dirname + '/../../partials/data.html')
   var html = abe.fileUtils.getFileContent(login);
 
   var template = abe.Handlebars.compile(html, {noEscape: true})

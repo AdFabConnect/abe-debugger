@@ -1,5 +1,7 @@
 'use strict';
 
+var path = require('path');
+
 function sortByDate(a, b) {
   var dateA = new Date(a.json.abe_meta.latest.date)
   var dateB = new Date(b.json.abe_meta.latest.date)
@@ -29,8 +31,8 @@ var route = function route(req, res, next, abe) {
   let draft = abe.config.draft.url
   let publish = abe.config.publish.url
 
-  var drafted = abe.FileParser.getFilesByType(abe.fileUtils.concatPath(site.path, draft), 'd')
-  // var published = abe.FileParser.getFilesByType(abe.fileUtils.concatPath(site.path, publish))
+  var drafted = abe.FileParser.getFilesByType(path.join(site.path, draft), 'd')
+  // var published = abe.FileParser.getFilesByType(path.join(site.path, publish))
 
   var results = {}
   // drafted = drafted.concat(published)
@@ -99,7 +101,7 @@ var route = function route(req, res, next, abe) {
       var status = (r.json.abe_meta.status === 'publish') ? r.json.abe_meta.status : 'draft'
       if (flush && r.willRemove && status !== 'publish') {
         var folder = abe.config.draft.url
-        var draftUrl = abe.fileUtils.concatPath(folder, r.json.abe_meta.latest.abeUrl)
+        var draftUrl = path.join(folder, r.json.abe_meta.latest.abeUrl)
         var fileToRemove = abe.FileParser.getFileDataFromUrl(draftUrl)
         
         if (!abe.fileUtils.isFile(fileToRemove.json.path)) {
@@ -164,7 +166,7 @@ var route = function route(req, res, next, abe) {
   // console.log('* * * * * * * * * * * * * * * * * * * * * * * * * * * * *')
   // console.log('toRemove', toRemove)
 
-  var flush = abe.fileUtils.concatPath(__dirname + '/../../partials/flush.html')
+  var flush = path.join(__dirname + '/../../partials/flush.html')
   var html = abe.fileUtils.getFileContent(flush);
 
   var template = abe.Handlebars.compile(html, {noEscape: true})

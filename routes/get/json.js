@@ -1,5 +1,7 @@
 'use strict';
 
+var path = require('path');
+
 var route = function route(req, res, next, abe) {
   abe.Hooks.instance.trigger('beforeRoute', req, res, next);
   if(typeof res._header !== 'undefined' && res._header !== null) return;
@@ -11,8 +13,8 @@ var route = function route(req, res, next, abe) {
   let draft = abe.config.draft.url
   let publish = abe.config.publish.url
 
-  var drafted = abe.FileParser.getFilesByType(abe.fileUtils.concatPath(site.path, draft), 'd')
-  var published = abe.FileParser.getFilesByType(abe.fileUtils.concatPath(site.path, publish))
+  var drafted = abe.FileParser.getFilesByType(path.join(site.path, draft), 'd')
+  var published = abe.FileParser.getFilesByType(path.join(site.path, publish))
 
   drafted = drafted.concat(published)
 
@@ -23,15 +25,15 @@ var route = function route(req, res, next, abe) {
     results.push(json)
   })
 
-  var jsonFile = abe.fileUtils.concatPath(__dirname + '/../../partials/json.html')
+  var jsonFile = path.join(__dirname + '/../../partials/json.html')
   var html = abe.fileUtils.getFileContent(jsonFile);
   var json
   var error = ''
   var jsonPath
 
   if(typeof req.query.path !== 'undefined' && req.query.path !== null) {
-    var path = abe.fileUtils.concatPath(abe.config.root, abe.config.draft.url, req.query.path)
-    var tplUrl = abe.FileParser.getFileDataFromUrl(path)
+    var pathQuery = path.join(abe.config.root, abe.config.draft.url, req.query.path)
+    var tplUrl = abe.FileParser.getFileDataFromUrl(pathQuery)
     if (!abe.fileUtils.isFile(tplUrl.json.path)) {
       error = '[ ERROR ] no json found : ' + tplUrl.json.path.replace(abe.config.root, '')
     }else {
