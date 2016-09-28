@@ -7,23 +7,7 @@ var route = function route(req, res, next, abe) {
   if(typeof res._header !== 'undefined' && res._header !== null) return;
 
   var site = abe.folderUtils.folderInfos(abe.config.root)
-  var allDraft = []
-  var allPublished = []
-
-  let draft = abe.config.draft.url
-  let publish = abe.config.publish.url
-
-  var drafted = abe.FileParser.getFilesByType(path.join(site.path, draft), 'd')
-  var published = abe.FileParser.getFilesByType(path.join(site.path, publish))
-
-  drafted = drafted.concat(published)
-
-  var results = []
-  Array.prototype.forEach.call(drafted, function(file) {
-    var jsonPath = abe.FileParser.getFileDataFromUrl(file.path).json.path
-    var json = abe.FileParser.getJson(jsonPath)
-    results.push(json)
-  })
+  var files = abe.Manager.instance.getList()
 
   var jsonFile = path.join(__dirname + '/../../partials/json.html')
   var html = abe.fileUtils.getFileContent(jsonFile);
@@ -42,7 +26,7 @@ var route = function route(req, res, next, abe) {
     }
   }
 
-  var template = abe.Handlebars.compile(html, {noEscape: true})
+  var template = abe.Handlebars.compile(html)
   var tmp = template({
     express: {
       req: req,
@@ -50,13 +34,32 @@ var route = function route(req, res, next, abe) {
     },
     path: req.query.path,
     jsonPath: jsonPath,
-    json: JSON.stringify(json),
+    json: syntaxHighlight(JSON.stringify(json, null, 2)),
     error: error,
-    results: results,
-    fileNum: results.length
+    files: files,
+    fileNum: files.length
   })
   
   return res.send(tmp);
+}
+
+function syntaxHighlight(json) {
+    json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+        var cls = 'color: darkorange;';
+        if (/^"/.test(match)) {
+            if (/:$/.test(match)) {
+                cls = 'color: red;';
+            } else {
+                cls = 'color: green;';
+            }
+        } else if (/true|false/.test(match)) {
+            cls = 'color: blue;';
+        } else if (/null/.test(match)) {
+            cls = 'color: magenta;';
+        }
+        return '<span style="' + cls + '">' + match + '</span>';
+    });
 }
 
 exports.default = route

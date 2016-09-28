@@ -42,14 +42,17 @@
         <input name="path" placeholder="/" value="{{path}}" class="form-control" type="hidden" />
       </div>
       <br />
+      <a href="javascript:;" onclick="jQuery('#jsonView').toggle();">Toggle view </a>
       <div class="input-group">
         <span class="input-group-addon" id="basic-code"><strong>{}</strong></span>
-        <textarea rows="10" name="json" placeholder='{"key":"value"}' class="form-control" data-json class="form-control" data-path aria-describedby="basic-code">{{json}}</textarea>
+        <!--textarea rows="25" name="json" placeholder='{"key":"value"}' class="form-control" data-json class="form-control" data-path aria-describedby="basic-code">{{json}}</textarea-->
+        <pre class="json" id="jsonView">{{{json}}}</pre>
+
       </div>
       <br />
-      <div class="form-group">
+      <!--div class="form-group">
         <input type="submit" value="update" class="btn btn-default" />
-      </div>
+      </div-->
     </form>
     {{/if}}
 
@@ -65,7 +68,7 @@
           </tr>
         </thead>
         <tbody>
-          {{#each results}}
+          {{#each files}}
             <tr>
               <td>
               {{@index}}
