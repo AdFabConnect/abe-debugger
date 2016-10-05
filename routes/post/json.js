@@ -15,7 +15,7 @@ var route = function route(req, res, next, abe) {
   if(typeof req.body.jsonPath !== 'undefined' && req.body.jsonPath !== null) {
     try {
       var jsonToSave = JSON.parse(req.body.json)
-      abe.saveJson(req.body.jsonPath, jsonToSave)
+      abe.cmsOperations.save.saveJson(req.body.jsonPath, jsonToSave)
     } catch(e) {
       error = e
       console.log(e);
