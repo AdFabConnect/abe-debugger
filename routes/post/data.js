@@ -17,7 +17,7 @@ var route = function route(req, res, next, abe) {
   }
 
   var dateStart = new Date()
-  abe.Sql.executeQuery(req.body.path, request, json)
+  abe.cmsData.sql.executeQuery(req.body.path, request, json)
     .then((result) => {
       var d = (new Date().getTime() - dateStart.getTime()) / 1000
 
