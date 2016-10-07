@@ -33,7 +33,7 @@ var route = function route(req, res, next, abe) {
     }
   }
 
-  var site = abe.folderUtils.folderInfos(abe.config.root)
+  var site = abe.cmsData.revision.filePathInfos(abe.config.root)
   var allDraft = []
   var allPublished = []
 

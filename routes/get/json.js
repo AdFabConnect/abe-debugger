@@ -6,7 +6,7 @@ var route = function route(req, res, next, abe) {
   abe.Hooks.instance.trigger('beforeRoute', req, res, next);
   if(typeof res._header !== 'undefined' && res._header !== null) return;
 
-  var site = abe.folderUtils.folderInfos(abe.config.root)
+  var site = abe.cmsData.revision.filePathInfos(abe.config.root)
   var files = abe.Manager.instance.getList()
 
   var jsonFile = path.join(__dirname + '/../../partials/json.html')
