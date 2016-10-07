@@ -39,7 +39,7 @@ var route = function route(req, res, next, abe) {
 
   Array.prototype.forEach.call(drafted, function(file) {
     var jsonPath = abe.FileParser.getFileDataFromUrl(file.path).json.path
-    if (abe.fileUtils.isFile(jsonPath)) {
+    if (abe.coreUtils.file.exist(jsonPath)) {
       var json = abe.FileParser.getJson(jsonPath)
       if(typeof results[json.abe_meta.link] === 'undefined' || results[json.abe_meta.link] === null) {
         results[json.abe_meta.link] = []
@@ -104,7 +104,7 @@ var route = function route(req, res, next, abe) {
         var draftUrl = path.join(folder, r.json.abe_meta.latest.abeUrl)
         var fileToRemove = abe.FileParser.getFileDataFromUrl(draftUrl)
         
-        if (!abe.fileUtils.isFile(fileToRemove.json.path)) {
+        if (!abe.coreUtils.file.exist(fileToRemove.json.path)) {
           errors.push({
             path: fileToRemove.json.path,
             msg: fileToRemove.json.path + " doesn't exist <br /> <br />Draft:" + draftUrl + " <br /> <br />status:" + status
@@ -122,7 +122,7 @@ var route = function route(req, res, next, abe) {
             })
           }
         }
-        if (!abe.fileUtils.isFile(fileToRemove[status].path)) {
+        if (!abe.coreUtils.file.exist(fileToRemove[status].path)) {
           errors.push({
             path: fileToRemove[status].path,
             msg: fileToRemove[status].path + " doesn't exist <br /> <br />Draft:" + draftUrl + " <br /> <br />status:" + status
@@ -167,7 +167,7 @@ var route = function route(req, res, next, abe) {
   // console.log('toRemove', toRemove)
 
   var flush = path.join(__dirname + '/../../partials/flush.html')
-  var html = abe.fileUtils.getFileContent(flush);
+  var html = abe.coreUtils.file.getContent(flush);
 
   var template = abe.Handlebars.compile(html, {noEscape: true})
   var tmp = template({

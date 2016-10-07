@@ -7,7 +7,7 @@ var route = function route(req, res, next, abe) {
   if(typeof res._header !== 'undefined' && res._header !== null) return;
 
   var jsonFile = path.join(__dirname + '/../../partials/json.html')
-  var html = abe.fileUtils.getFileContent(jsonFile);
+  var html = abe.coreUtils.file.getContent(jsonFile);
   var json
   var jsonPath
   var error = ''
@@ -25,7 +25,7 @@ var route = function route(req, res, next, abe) {
   if(typeof req.body.path !== 'undefined' && req.body.path !== null) {
     var pathBody = path.join(abe.config.root, abe.config.draft.url, req.body.path)
     var tplUrl = abe.FileParser.getFileDataFromUrl(pathBody)
-    if (!abe.fileUtils.isFile(tplUrl.json.path)) {
+    if (!abe.coreUtils.file.exist(tplUrl.json.path)) {
       error = '[ ERROR ] no json found : ' + tplUrl.json.path.replace(abe.config.root, '')
     }else {
       jsonPath = tplUrl.json.path
@@ -53,7 +53,7 @@ var route = function route(req, res, next, abe) {
   })
 
   var jsonFile = path.join(__dirname + '/../../partials/json.html')
-  var html = abe.fileUtils.getFileContent(jsonFile);
+  var html = abe.coreUtils.file.getContent(jsonFile);
   var json
   var error = ''
   var jsonPath
@@ -61,7 +61,7 @@ var route = function route(req, res, next, abe) {
   if(typeof req.query.path !== 'undefined' && req.query.path !== null) {
     var pathQuery = path.join(abe.config.root, abe.config.draft.url, req.query.path)
     var tplUrl = abe.FileParser.getFileDataFromUrl(pathQuery)
-    if (!abe.fileUtils.isFile(tplUrl.json.path)) {
+    if (!abe.coreUtils.file.exist(tplUrl.json.path)) {
       error = '[ ERROR ] no json found : ' + tplUrl.json.path.replace(abe.config.root, '')
     }else {
       jsonPath = tplUrl.json.path
