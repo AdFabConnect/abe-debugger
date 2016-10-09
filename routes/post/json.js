@@ -7,7 +7,7 @@ var route = function route(req, res, next, abe) {
   if(typeof res._header !== 'undefined' && res._header !== null) return;
 
   var jsonFile = path.join(__dirname + '/../../partials/json.html')
-  var html = abe.coreUtils.file.getContent(jsonFile);
+  var html = abe.cmsData.file.get(jsonFile);
   var json
   var jsonPath
   var error = ''
@@ -53,7 +53,7 @@ var route = function route(req, res, next, abe) {
   })
 
   var jsonFile = path.join(__dirname + '/../../partials/json.html')
-  var html = abe.coreUtils.file.getContent(jsonFile);
+  var html = abe.cmsData.file.get(jsonFile);
   var json
   var error = ''
   var jsonPath
