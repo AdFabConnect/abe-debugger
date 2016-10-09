@@ -31,16 +31,14 @@ var route = function route(req, res, next, abe) {
   let draft = abe.config.draft.url
   let publish = abe.config.publish.url
 
-  var drafted = abe.FileParser.getFilesByType(path.join(site.path, draft), 'd')
-  // var published = abe.FileParser.getFilesByType(path.join(site.path, publish))
+  var drafted = abe.cmsData.file.getFilesByType(path.join(site.path, draft), 'd')
 
   var results = {}
-  // drafted = drafted.concat(published)
 
   Array.prototype.forEach.call(drafted, function(file) {
-    var jsonPath = abe.FileParser.getFileDataFromUrl(file.path).json.path
+    var jsonPath = abe.cmsData.file.fromUrl(file.path).json.path
     if (abe.coreUtils.file.exist(jsonPath)) {
-      var json = abe.FileParser.getJson(jsonPath)
+      var json = abe.cmsData.file.get(jsonPath)
       if(typeof results[json.abe_meta.link] === 'undefined' || results[json.abe_meta.link] === null) {
         results[json.abe_meta.link] = []
       }
@@ -102,7 +100,7 @@ var route = function route(req, res, next, abe) {
       if (flush && r.willRemove && status !== 'publish') {
         var folder = abe.config.draft.url
         var draftUrl = path.join(folder, r.json.abe_meta.latest.abeUrl)
-        var fileToRemove = abe.FileParser.getFileDataFromUrl(draftUrl)
+        var fileToRemove = abe.cmsData.file.fromUrl(draftUrl)
         
         if (!abe.coreUtils.file.exist(fileToRemove.json.path)) {
           errors.push({

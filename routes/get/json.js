@@ -17,12 +17,12 @@ var route = function route(req, res, next, abe) {
 
   if(typeof req.query.path !== 'undefined' && req.query.path !== null) {
     var pathQuery = path.join(abe.config.root, abe.config.draft.url, req.query.path)
-    var tplUrl = abe.FileParser.getFileDataFromUrl(pathQuery)
+    var tplUrl = abe.cmsData.file.fromUrl(pathQuery)
     if (!abe.coreUtils.file.exist(tplUrl.json.path)) {
       error = '[ ERROR ] no json found : ' + tplUrl.json.path.replace(abe.config.root, '')
     }else {
       jsonPath = tplUrl.json.path
-      json = abe.FileParser.getJson(tplUrl.json.path)
+      json = abe.cmsData.file.get(tplUrl.json.path)
     }
   }
 

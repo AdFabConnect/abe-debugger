@@ -24,12 +24,12 @@ var route = function route(req, res, next, abe) {
 
   if(typeof req.body.path !== 'undefined' && req.body.path !== null) {
     var pathBody = path.join(abe.config.root, abe.config.draft.url, req.body.path)
-    var tplUrl = abe.FileParser.getFileDataFromUrl(pathBody)
+    var tplUrl = abe.cmsData.file.fromUrl(pathBody)
     if (!abe.coreUtils.file.exist(tplUrl.json.path)) {
       error = '[ ERROR ] no json found : ' + tplUrl.json.path.replace(abe.config.root, '')
     }else {
       jsonPath = tplUrl.json.path
-      json = abe.FileParser.getJson(tplUrl.json.path)
+      json = abe.cmsData.file.get(tplUrl.json.path)
     }
   }
 
@@ -40,15 +40,15 @@ var route = function route(req, res, next, abe) {
   let draft = abe.config.draft.url
   let publish = abe.config.publish.url
 
-  var drafted = abe.FileParser.getFilesByType(path.join(site.path, draft), 'd')
-  var published = abe.FileParser.getFilesByType(path.join(site.path, publish))
+  var drafted = abe.cmsData.file.getFilesByType(path.join(site.path, draft), 'd')
+  var published = abe.cmsData.file.getFilesByType(path.join(site.path, publish))
 
   drafted = drafted.concat(published)
 
   var results = []
   Array.prototype.forEach.call(drafted, function(file) {
-    var jsonPath = abe.FileParser.getFileDataFromUrl(file.path).json.path
-    var json = abe.FileParser.getJson(jsonPath)
+    var jsonPath = abe.cmsData.file.fromUrl(file.path).json.path
+    var json = abe.cmsData.file.get(jsonPath)
     results.push(json)
   })
 
@@ -60,12 +60,12 @@ var route = function route(req, res, next, abe) {
 
   if(typeof req.query.path !== 'undefined' && req.query.path !== null) {
     var pathQuery = path.join(abe.config.root, abe.config.draft.url, req.query.path)
-    var tplUrl = abe.FileParser.getFileDataFromUrl(pathQuery)
+    var tplUrl = abe.cmsData.file.fromUrl(pathQuery)
     if (!abe.coreUtils.file.exist(tplUrl.json.path)) {
       error = '[ ERROR ] no json found : ' + tplUrl.json.path.replace(abe.config.root, '')
     }else {
       jsonPath = tplUrl.json.path
-      json = abe.FileParser.getJson(tplUrl.json.path)
+      json = abe.cmsData.file.get(tplUrl.json.path)
     }
   }
 
