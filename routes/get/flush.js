@@ -165,7 +165,7 @@ var route = function route(req, res, next, abe) {
   // console.log('toRemove', toRemove)
 
   var flush = path.join(__dirname + '/../../partials/flush.html')
-  var html = abe.cmsData.file.get(flush);
+  var html = abe.coreUtils.file.getContent(flush);
 
   var template = abe.Handlebars.compile(html, {noEscape: true})
   var tmp = template({

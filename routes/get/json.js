@@ -10,7 +10,7 @@ var route = function route(req, res, next, abe) {
   var files = abe.Manager.instance.getList()
 
   var jsonFile = path.join(__dirname + '/../../partials/json.html')
-  var html = abe.cmsData.file.get(jsonFile);
+  var html = abe.coreUtils.file.getContent(jsonFile);
   var json
   var error = ''
   var jsonPath
