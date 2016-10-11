@@ -8,8 +8,8 @@ var route = function route(req, res, next, abe) {
 
   var htmlToSend = '';
 
-  var login = path.join(__dirname + '/../../partials/data.html')
-  var html = abe.coreUtils.file.getContent(login);
+  var data = path.join(__dirname + '/../../partials/data.html')
+  var html = abe.coreUtils.file.getContent(data);
 
   var template = abe.Handlebars.compile(html, {noEscape: true})
   var tmp = template({

@@ -21,7 +21,7 @@ var route = function route(req, res, next, abe) {
     .then((result) => {
       var d = (new Date().getTime() - dateStart.getTime()) / 1000
 
-      var login = path.join(__dirname + '/../../partials/data.html')
+      var data = path.join(__dirname + '/../../partials/data.html')
       var html = abe.coreUtils.file.getContent(login);
       var template = abe.Handlebars.compile(html, {noEscape: true})
       var tmp = template({
