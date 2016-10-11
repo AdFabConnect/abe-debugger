@@ -22,7 +22,7 @@ var route = function route(req, res, next, abe) {
       var d = (new Date().getTime() - dateStart.getTime()) / 1000
 
       var data = path.join(__dirname + '/../../partials/data.html')
-      var html = abe.coreUtils.file.getContent(login);
+      var html = abe.coreUtils.file.getContent(data);
       var template = abe.Handlebars.compile(html, {noEscape: true})
       var tmp = template({
         express: {
