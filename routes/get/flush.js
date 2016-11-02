@@ -36,7 +36,7 @@ var route = function route(req, res, next, abe) {
   var results = {}
 
   Array.prototype.forEach.call(drafted, function(file) {
-    var jsonPath = abe.cmsData.file.fromUrl(file.path).json.path
+    var jsonPath = abe.cmsData.file.fromUrl(file).json.path
     if (abe.coreUtils.file.exist(jsonPath)) {
       var json = abe.cmsData.file.get(jsonPath)
       if(typeof results[json.abe_meta.link] === 'undefined' || results[json.abe_meta.link] === null) {

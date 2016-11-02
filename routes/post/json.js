@@ -33,21 +33,18 @@ var route = function route(req, res, next, abe) {
     }
   }
 
-  var site = abe.cmsData.revision.filePathInfos(abe.config.root)
-  var allDraft = []
-  var allPublished = []
+  const site = abe.cmsData.revision.filePathInfos(abe.config.root)
+  let allDocs = []
 
-  let draft = abe.config.draft.url
-  let publish = abe.config.publish.url
+  const drafts = abe.cmsData.file.getFilesByType(path.join(site.path, abe.config.draft.url), 'd')
+  const published = abe.cmsData.file.getFilesByType(path.join(site.path, abe.config.publish.url))
 
-  var drafted = abe.cmsData.file.getFilesByType(path.join(site.path, draft), 'd')
-  var published = abe.cmsData.file.getFilesByType(path.join(site.path, publish))
+  allDocs = allDocs.concat(drafts)
+  allDocs = allDocs.concat(published)
 
-  drafted = drafted.concat(published)
-
-  var results = []
-  Array.prototype.forEach.call(drafted, function(file) {
-    var jsonPath = abe.cmsData.file.fromUrl(file.path).json.path
+  let results = []
+  Array.prototype.forEach.call(allDocs, function(file) {
+    var jsonPath = abe.cmsData.file.fromUrl(file).json.path
     var json = abe.cmsData.file.get(jsonPath)
     results.push(json)
   })
