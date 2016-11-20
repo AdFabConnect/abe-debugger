@@ -1,0 +1,25 @@
+{
+  "name": "abe-debugger",
+  "version": "1.0.0",
+  "description": "Abe debugger",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AdFabConnect/abe-debugger.git"
+  },
+  "keywords": [
+    "abe",
+    "plugin",
+    "cms",
+    "debugger"
+  ],
+  "author": "Nicolas Labbé",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AdFabConnect/abe-debugger/issues"
+  },
+  "homepage": "https://github.com/AdFabConnect/abe-debugger#readme"
+}
